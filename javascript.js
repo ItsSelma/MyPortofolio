@@ -236,9 +236,84 @@ function scrollToRoot() {
   window.scrollTo(0, document.body.scrollHeight);
 }
 
+// textboxovi kod korijena: napredovanje kroz njih i dalje prati scroll poziciju, ali svaki
+// mora ostati prikazan minimalno vrijeme citanja (racunato po broju rijeci) prije nego
+// se pređe na sljedeci - ako korisnik brzo odskrola dalje, sekvenca ga "saceka" i nastavi
+// kad prodje dovoljno vremena, umjesto da sve proleti u sekundi
+function initRootInfo() {
+  // DOM redoslijed je namjerno obrnut (najnoviji dodan pri vrhu), pa .reverse() daje hronoloski tok
+  const panels = Array.from(document.querySelectorAll('.info-panel')).reverse();
+
+  const STEP = 0.55; // koliko "ekrana" scrolla otkljucava sljedeci textbox
+  const MIN_READ_MS = 3500;
+  const MAX_READ_MS = 8500; // gornja granica - neki tekstovi imaju ponovljenu recenicu i ne smiju predugo cekati
+  const MS_PER_WORD = 300;
+
+  function readDuration(el) {
+    const words = el.textContent.trim().split(/\s+/).length;
+    return Math.min(MAX_READ_MS, Math.max(MIN_READ_MS, words * MS_PER_WORD));
+  }
+
+  function show(el) {
+    el.style.display = 'block';
+    requestAnimationFrame(() => {
+      el.style.opacity = '1';
+    });
+  }
+
+  function hide(el) {
+    el.style.opacity = '0';
+    setTimeout(() => {
+      el.style.display = 'none';
+    }, 500);
+  }
+
+  let displayedIndex = -1;
+  let lastSwitchTime = 0;
+
+  function targetIndexFromScroll() {
+    const maxScroll = document.body.scrollHeight - window.innerHeight;
+    const scrolledUp = maxScroll - window.scrollY;
+    const progress = scrolledUp / window.innerHeight;
+
+    let idx = -1;
+    for (let i = 0; i < panels.length; i++) {
+      if (progress >= i * STEP + 0.02) idx = i;
+    }
+    return idx;
+  }
+
+  function switchTo(i) {
+    if (displayedIndex >= 0) hide(panels[displayedIndex]);
+    displayedIndex = i;
+    lastSwitchTime = Date.now();
+    if (i >= 0) show(panels[i]);
+  }
+
+  function tick() {
+    const target = targetIndexFromScroll();
+
+    if (target < displayedIndex) {
+      switchTo(target); // korisnik se vratio dolje - odmah reaguj, bez cekanja
+      return;
+    }
+
+    if (target > displayedIndex) {
+      const minDwell = displayedIndex >= 0 ? readDuration(panels[displayedIndex]) : 0;
+      if (Date.now() - lastSwitchTime >= minDwell) {
+        switchTo(displayedIndex + 1); // napreduj tacno jedan po jedan
+      }
+    }
+  }
+
+  window.addEventListener('scroll', tick, { passive: true });
+  setInterval(tick, 300); // hvata slucaj kad korisnik stane skrolati dok caka na sljedeci textbox
+}
+
 window.addEventListener('load', () => {
   buildTree();
   scrollToRoot();
+  initRootInfo();
 });
 
 let resizeTimer;

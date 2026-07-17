@@ -8,7 +8,6 @@ html, body {
   width: 100%;
   background: #150d08;
   overflow-x: hidden;
-  scroll-behavior: smooth;
 }
 
 #tree-page {
@@ -83,6 +82,93 @@ html, body {
   letter-spacing: 4px;
   text-transform: uppercase;
   color: rgba(255, 246, 224, 0.75);
+}
+
+.info-panel {
+  display: none;
+  opacity: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(560px, 82%);
+  padding: 26px 30px;
+  background: rgba(43, 28, 16, 0.35);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 246, 224, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+  color: #f7ecd8;
+  font-family: 'Georgia', serif;
+  font-size: 14px;
+  line-height: 1.75;
+  text-align: center;
+  letter-spacing: 0.3px;
+  transition: opacity 0.5s ease;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.info-panel p {
+  margin: 0;
+}
+
+.glow-link {
+  display: block;
+  margin-top: 14px;
+  color: #f2c94c;
+  font-family: 'Georgia', serif;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(242, 201, 76, 0.4);
+  text-shadow: 0 0 8px rgba(242, 201, 76, 0.55);
+  pointer-events: auto;
+  cursor: pointer;
+  transition: color 0.3s ease, text-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.glow-link:hover,
+.glow-link:focus {
+  color: #ffe38a;
+  border-color: rgba(255, 227, 138, 0.85);
+  text-shadow: 0 0 14px rgba(255, 227, 138, 0.9), 0 0 26px rgba(242, 201, 76, 0.5);
+}
+
+.glow-link + .glow-link {
+  margin-top: 6px;
+}
+
+#root-info {
+  bottom: 20vh;
+}
+
+#root-info-courses {
+  bottom: 54vh;
+}
+
+#root-info-university {
+  bottom: 88vh;
+}
+
+#root-info-tech {
+  bottom: 122vh;
+}
+
+#root-info-project {
+  bottom: 156vh;
+}
+
+#root-info-cisco {
+  bottom: 190vh;
+}
+
+#root-info-internship {
+  bottom: 224vh;
+}
+
+#root-info-workshop {
+  bottom: 258vh;
 }
 
 #scroll-hint {
