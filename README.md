@@ -27,8 +27,8 @@ first programming courses all the way up to the open sky above the crown.
 Just open `index.html` in a browser. That's it.
 
 ```
-git clone https://github.com/ItsSelma/MyResume.git
-cd MyResume
+git clone https://github.com/ItsSelma/MyPortofolio.git
+cd MyPortofolio
 start index.html      # Windows
 ```
 
