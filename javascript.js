@@ -239,7 +239,7 @@ function scrollToRoot() {
 // textboxovi se pojavljuju kad skrolanjem udju u ekran i nestaju kad izadju iz njega,
 // u oba smjera - svaki panel ima fiksnu poziciju na stranici, a vidljivost prati viewport
 function initRootInfo() {
-  const panels = document.querySelectorAll('.info-panel');
+  const panels = document.querySelectorAll('.info-panel, #contact-note');
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
