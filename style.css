@@ -59,33 +59,35 @@ html, body {
 
 #page-footer {
   position: absolute;
-  bottom: 2vh;
+  bottom: 5vh; /* iznad fiksnog scroll-hinta, a dovoljno nisko da ostane unutar zemlje */
   left: 50%;
   transform: translateX(-50%);
   width: min(640px, 86%);
   text-align: center;
   font-family: 'Georgia', serif;
-  color: rgba(255, 246, 224, 0.6);
+  color: rgba(255, 246, 224, 0.95);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8), 0 0 14px rgba(0, 0, 0, 0.6);
 }
 
 #footer-bio {
   margin: 0;
   padding: 0;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.7;
   letter-spacing: 0.4px;
 }
 
 #footer-tag {
   margin-top: 10px;
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: rgba(255, 246, 224, 0.75);
+  color: #ffe9b8;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8), 0 0 12px rgba(242, 201, 76, 0.45);
 }
 
 .info-panel {
-  display: none;
+  visibility: hidden;
   opacity: 0;
   position: absolute;
   left: 50%;
@@ -104,9 +106,14 @@ html, body {
   line-height: 1.75;
   text-align: center;
   letter-spacing: 0.3px;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.6s ease, visibility 0.6s;
   z-index: 5;
   pointer-events: none;
+}
+
+.info-panel.visible {
+  visibility: visible;
+  opacity: 1;
 }
 
 .info-panel p {
@@ -144,31 +151,83 @@ html, body {
 }
 
 #root-info-courses {
-  bottom: 54vh;
+  bottom: 70vh;
 }
 
 #root-info-university {
-  bottom: 88vh;
+  bottom: 120vh;
 }
 
 #root-info-tech {
-  bottom: 122vh;
+  bottom: 170vh;
 }
 
 #root-info-project {
-  bottom: 156vh;
+  bottom: 220vh;
 }
 
 #root-info-cisco {
-  bottom: 190vh;
+  bottom: 270vh;
 }
 
 #root-info-internship {
-  bottom: 224vh;
+  bottom: 320vh;
 }
 
 #root-info-workshop {
-  bottom: 258vh;
+  bottom: 370vh;
+}
+
+#root-info-genchange {
+  bottom: 420vh;
+}
+
+#root-info-finale {
+  bottom: 470vh;
+}
+
+/* zavrsni panel - veci i naglasen, stoji visoko u svijetlom nebu pa mu treba tamnija pozadina */
+.finale-panel {
+  width: min(680px, 90%);
+  padding: 42px 46px;
+  font-size: 17px;
+  line-height: 1.85;
+  background: linear-gradient(165deg, rgba(23, 34, 52, 0.62), rgba(43, 28, 16, 0.62));
+  border: 1px solid rgba(242, 201, 76, 0.55);
+  border-radius: 22px;
+  animation: finaleGlow 3.2s ease-in-out infinite;
+}
+
+.finale-panel p + p {
+  margin-top: 22px;
+}
+
+.finale-highlight {
+  font-size: 24px;
+  font-style: italic;
+  letter-spacing: 0.6px;
+  background: linear-gradient(90deg, #f2c94c, #ffe38a, #a9d6cf, #ffe38a, #f2c94c);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 10px rgba(242, 201, 76, 0.45));
+  animation: finaleShimmer 4s linear infinite;
+}
+
+@keyframes finaleGlow {
+  0%, 100% {
+    box-shadow: 0 0 24px rgba(242, 201, 76, 0.2), 0 8px 40px rgba(0, 0, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 55px rgba(242, 201, 76, 0.5), 0 8px 40px rgba(0, 0, 0, 0.5);
+  }
+}
+
+@keyframes finaleShimmer {
+  to {
+    background-position: 200% center;
+  }
 }
 
 #scroll-hint {
